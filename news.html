@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>News Website</title>
+    <style>
+      body {
+        max-height: 100%;
+        margin: 0;
+        padding: 0;
+        font-family: "Courier New", Courier, monospace;
+        background-color: #f4f4f4;
+      }
+      .container {
+        max-width: 800px;
+        margin: 3rem auto;
+        padding: 1.5rem;
+        background-color: #fff;
+        border-radius: 5px;
+      }
+      h1 {
+        text-align: center;
+        font-weight: bold;
+      }
+      ul {
+        list-style-type: none;
+        padding: 0;
+      }
+      li {
+        margin-bottom: 20px;
+        border-bottom: 1px solid #ddd;
+        padding-bottom: 20px;
+      }
+      h2 {
+        font-size: 1.2rem;
+        margin-bottom: 1.5rem;
+      }
+      a {
+        color: #007bff;
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Your Tech Newspaper</h1>
+      <ul class="list"></ul>
+    </div>
+
+    <script>
+      fetch(
+        "https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Ftechcrunch.com%2Ffeed%2F"
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          const news = document.querySelector(".list");
+          data.items.forEach((element) => {
+            const li = document.createElement("li");
+            const h2 = document.createElement("h2");
+            const a = document.createElement("a");
+            const h3 = document.createElement("h3");
+            h2.textContent = element.title;
+            a.textContent = "Read More";
+            a.href = element.link;
+            a.target = "_blank";
+            h3.innerHTML = element.author;
+            news.appendChild(li);
+            news.appendChild(h2);
+            news.appendChild(a);
+            news.appendChild(h3);
+          });
+        });
+    </script>
+  </body>
+</html>
